@@ -117,9 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnLogin.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnLogin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 158</value>
+    <value>586, 429</value>
   </data>
   <data name="btnLogin.Size" type="System.Drawing.Size, System.Drawing">
     <value>105, 23</value>
@@ -141,13 +145,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnLogin.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="txtUserName.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 41</value>
   </data>
   <data name="txtUserName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 20</value>
+    <value>568, 20</value>
   </data>
   <data name="txtUserName.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -162,10 +166,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;txtUserName.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="lblUsername.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="lblUsername.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblUsername.Location" type="System.Drawing.Point, System.Drawing">
     <value>24, 44</value>
@@ -186,10 +193,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblUsername.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="lblPassword.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="lblPassword.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblPassword.Location" type="System.Drawing.Point, System.Drawing">
     <value>24, 94</value>
@@ -210,7 +220,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblPassword.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="txtPassword.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 87</value>
@@ -219,7 +229,7 @@
     <value>*</value>
   </data>
   <data name="txtPassword.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 20</value>
+    <value>568, 20</value>
   </data>
   <data name="txtPassword.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -234,14 +244,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;txtPassword.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnCreate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnCreate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>27, 158</value>
+    <value>430, 429</value>
   </data>
   <data name="btnCreate.Size" type="System.Drawing.Size, System.Drawing">
     <value>105, 23</value>
@@ -262,6 +271,54 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnCreate.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="settingsCtrl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>27, 12</value>
+  </data>
+  <data name="settingsCtrl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>716, 399</value>
+  </data>
+  <data name="settingsCtrl1.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="settingsCtrl1.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;settingsCtrl1.Name" xml:space="preserve">
+    <value>settingsCtrl1</value>
+  </data>
+  <data name="&gt;&gt;settingsCtrl1.Type" xml:space="preserve">
+    <value>Patientenverwaltung.SettingsCtrl, Patientenverwaltung, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;settingsCtrl1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;settingsCtrl1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnEditSettings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>27, 428</value>
+  </data>
+  <data name="btnEditSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 23</value>
+  </data>
+  <data name="btnEditSettings.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="btnEditSettings.Text" xml:space="preserve">
+    <value>Einstellungen ändern</value>
+  </data>
+  <data name="&gt;&gt;btnEditSettings.Name" xml:space="preserve">
+    <value>btnEditSettings</value>
+  </data>
+  <data name="&gt;&gt;btnEditSettings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnEditSettings.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnEditSettings.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -274,7 +331,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>286, 204</value>
+    <value>755, 474</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Login</value>

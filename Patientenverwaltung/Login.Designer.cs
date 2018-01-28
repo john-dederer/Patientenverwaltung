@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.btnLogin = new System.Windows.Forms.Button();
             this.txtUserName = new System.Windows.Forms.TextBox();
@@ -35,6 +36,8 @@
             this.lblPassword = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.btnCreate = new System.Windows.Forms.Button();
+            this.settingsCtrl1 = new Patientenverwaltung.SettingsCtrl();
+            this.btnEditSettings = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnLogin
@@ -72,10 +75,26 @@
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
+            // settingsCtrl1
+            // 
+            resources.ApplyResources(this.settingsCtrl1, "settingsCtrl1");
+            this.settingsCtrl1.Name = "settingsCtrl1";
+            this.settingsCtrl1.SaveLocation = null;
+            this.settingsCtrl1.SaveType = null;
+            // 
+            // btnEditSettings
+            // 
+            resources.ApplyResources(this.btnEditSettings, "btnEditSettings");
+            this.btnEditSettings.Name = "btnEditSettings";
+            this.btnEditSettings.UseVisualStyleBackColor = true;
+            this.btnEditSettings.Click += new System.EventHandler(this.btnEditSettings_Click);
+            // 
             // Login
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnEditSettings);
+            this.Controls.Add(this.settingsCtrl1);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.lblPassword);
@@ -96,6 +115,8 @@
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnCreate;
+        private SettingsCtrl settingsCtrl1;
+        private System.Windows.Forms.Button btnEditSettings;
     }
 }
 

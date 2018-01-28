@@ -23,6 +23,9 @@ namespace Patientenverwaltung
         public string Username { get; set; }
         public ErrorProvider ErrorProvider { get; set; }
         public static string DoctorJsonPath { get; set; }
+        public static string SettingsJsonPath { get; set; }
+
+        private bool _bFirstStart = false;
 
         public Login()
         {
@@ -33,11 +36,36 @@ namespace Patientenverwaltung
             lblPassword.Text = Strings.Password;
             ErrorProvider = new ErrorProvider();
 
+            // Initialize Settings
+            IntializeSettings();
+
+            settingsCtrl1.SetParent(this);
+            settingsCtrl1.Init();
+
+            if (_bFirstStart)
+            {
+                btnCreate.Visible = false;
+                btnLogin.Visible = false;
+                btnEditSettings.Visible = false;
+                settingsCtrl1.Visible = true;
+
+                MessageBox.Show(
+                    "Dies ist Ihr erster Start dieses Programmes. Bitte legen sie die nötigen Einstellungen für das Programm fest.");
+            }
+
             // Look for JSON Path
             InitializeJson();
         }
 
-        private void InitializeJson()
+        private void IntializeSettings()
+        {
+            SettingsJsonPath = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\Settings.json";
+            if (File.Exists(SettingsJsonPath)) return;
+            CreateJsonFile(SettingsJsonPath);
+            _bFirstStart = true;
+        }
+
+        private static void InitializeJson()
         {
             DoctorJsonPath = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\Doctor.json";
 
@@ -49,8 +77,7 @@ namespace Patientenverwaltung
         {
             using (var file = File.CreateText(jsonPath))
             {
-                var serializer = new JsonSerializer();
-                serializer.Serialize(file, "{}");
+                                
             }
         }
 
@@ -132,7 +159,8 @@ namespace Patientenverwaltung
             var doctor = new Doctor
             {
                 Username = this.txtUserName.Text,
-                Hash = PasswordStorage.CreateHash(this.txtPassword.Text)
+                Hash = PasswordStorage.CreateHash(this.txtPassword.Text),
+                Patients = new List<Patient>()
             };
 
             Connector.Create(doctor);
@@ -175,6 +203,20 @@ namespace Patientenverwaltung
             }
 
             return bValidated;
+        }
+
+        private void btnEditSettings_Click(object sender, EventArgs e)
+        {
+            if (settingsCtrl1.Visible) return;
+            settingsCtrl1.Init();
+            settingsCtrl1.Visible = true;
+        }
+
+        public void ResetButtons()
+        {
+            btnCreate.Visible = true;
+            btnLogin.Visible = true;
+            btnEditSettings.Visible = true;
         }
     }
 }

@@ -112,6 +112,13 @@
     <Compile Include="Patient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SettingsCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SettingsCtrl.Designer.cs">
+      <DependentUpon>SettingsCtrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Strings.de.Designer.cs">
       <DependentUpon>Strings.de.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -155,6 +162,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SettingsCtrl.resx">
+      <DependentUpon>SettingsCtrl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Strings.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.de.Designer.cs</LastGenOutput>
