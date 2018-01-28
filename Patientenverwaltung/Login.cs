@@ -52,9 +52,6 @@ namespace Patientenverwaltung
                 MessageBox.Show(
                     "Dies ist Ihr erster Start dieses Programmes. Bitte legen sie die nötigen Einstellungen für das Programm fest.");
             }
-
-            // Look for JSON Path
-            InitializeJson();
         }
 
         private void IntializeSettings()
@@ -65,28 +62,11 @@ namespace Patientenverwaltung
             _bFirstStart = true;
         }
 
-        private static void InitializeJson()
-        {
-            DoctorJsonPath = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\Doctor.json";
-
-            // Read JSON from File or Create if necessary
-            if (!File.Exists(DoctorJsonPath)) { CreateJsonFile(DoctorJsonPath); }
-        }
-
         private static void CreateJsonFile(string jsonPath)
         {
             using (var file = File.CreateText(jsonPath))
             {
                                 
-            }
-        }
-
-        private static void UpdateJsonFile(string jsonPath, Object obj)
-        {
-            using (var file = File.OpenRead(jsonPath))
-            {
-                var serializer = new JsonSerializer();
-                //serializer.Serialize(file, "{}");
             }
         }
 
@@ -150,11 +130,11 @@ namespace Patientenverwaltung
             if (!ValidateInput()) return;
 
             // Check if username already exists
-            //if (!CheckCredentials(this.txtUserName.Text))
-            //{
-            //    ErrorProvider.SetError(btnCreate, "Username already exists");
-            //    return;
-            //}
+            if (!CheckCredentials(this.txtUserName.Text))
+            {
+                ErrorProvider.SetError(btnCreate, "Username already exists");
+                return;
+            }
 
             var doctor = new Doctor
             {
@@ -171,15 +151,17 @@ namespace Patientenverwaltung
             var bChecked = false;
             if (password.Equals(string.Empty))
             {
-                // Just look if Username exists
-                var json = JObject.Parse(GetJson(DoctorJsonPath));
+                // Just look if Username exists                
+                var doctor = new Doctor {Username = username};
 
-                
+                bChecked = !Connector.Read(doctor);
             }
             else
             {
                 // Check if credentials match with saved ones
-                
+                var doctor = new Doctor { Username = username, Hash = password};
+
+                bChecked = !Connector.Read(doctor);
             }
 
             return bChecked;

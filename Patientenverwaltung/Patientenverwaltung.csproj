@@ -201,5 +201,8 @@
     <Content Include="docs\MySqlTransaction.xml" />
     <Content Include="PasswordStorage\LICENSE.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="JSON\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
