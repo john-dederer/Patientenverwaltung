@@ -8,6 +8,9 @@ namespace Patientenverwaltung
 {
     static class Program
     {
+        public static bool OpenMainFormOnClose { get; set; }
+        public static Doctor Doctor { get; set; }
+
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>
@@ -16,7 +19,15 @@ namespace Patientenverwaltung
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            OpenMainFormOnClose = false;
+
             Application.Run(new Login());
+
+            if (OpenMainFormOnClose)
+            {
+               Application.Run(new Main(Doctor)); 
+            }
         }
     }
 }

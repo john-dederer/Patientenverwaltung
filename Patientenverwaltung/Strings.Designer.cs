@@ -70,6 +70,16 @@ namespace Patientenverwaltung {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dies ist Ihr erster Start dieses Programmes. Bitte legen sie die nötigen Einstellungen für das Programm fest. ähnelt.
+        /// </summary>
+        public static string Login_Login_Dies_ist_Ihr_erster_Start_dieses_Programmes__Bitte_legen_sie_die_nötigen_Einstellungen_für_das_Programm_fest_ {
+            get {
+                return ResourceManager.GetString("Login_Login_Dies_ist_Ihr_erster_Start_dieses_Programmes__Bitte_legen_sie_die_nöti" +
+                        "gen_Einstellungen_für_das_Programm_fest_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Password ähnelt.
         /// </summary>
         public static string Password {

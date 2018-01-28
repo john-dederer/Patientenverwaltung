@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -64,7 +65,7 @@ namespace Patientenverwaltung
         /// Return true if Object is in datastore. Modifies the given object
         /// </summary>
         /// <returns></returns>
-        public static bool Read(Model model, string extraOptions = "")
+        public static bool Read(ref Doctor model, string extraOptions = "")
         {
             if (!Initialized) Initialize();
 
@@ -93,7 +94,7 @@ namespace Patientenverwaltung
             if (model.GetType() == typeof(Doctor))
             {                
                 var list = JsonConvert.DeserializeObject<List<Doctor>>(File.ReadAllText($@"{SaveLocation}\Doctor.json"));
-                _doctors = list;
+                _doctors = list ?? new List<Doctor>();
                 _doctors.Add((Doctor)model);
 
                 var convertedJson = JsonConvert.SerializeObject(_doctors, Formatting.Indented);
@@ -130,62 +131,56 @@ namespace Patientenverwaltung
             }            
         }
 
-        private static bool ReadJson(ref Model model, string extraOptions)
+        private static bool ReadJson(ref Doctor model, string extraOptions)
         {
-            var bRead = false;
-
-            if (model.GetType() == typeof(Doctor))
+            try
             {
-                if (!File.Exists($@"{SaveLocation}\Doctor.json")) return false;
-                /*
-                IList<Doctor> doctors = new List<Doctor>();
+                var bRead = false;
 
-                var reader =
-                    new JsonTextReader(new StringReader(File.ReadAllText($@"{SaveLocation}\Doctor.json")))
-                    {
-                        SupportMultipleContent = true
-                    };
-
-                while (true)
+                if (model.GetType() == typeof(Doctor))
                 {
-                    if (!reader.Read())
+                    if (!File.Exists($@"{SaveLocation}\Doctor.json")) return false;
+
+                    var json = File.ReadAllText($@"{SaveLocation}\Doctor.json");
+
+                    if (json == string.Empty) throw new UserDoesNotExist();
+
+                    var list = JsonConvert.DeserializeObject<List<Doctor>>(json);
+                    _doctors = list;
+
+                    var docModel = (Doctor)model;
+                    foreach (var doc in _doctors)
                     {
-                        break;
+                        if (extraOptions == "password")
+                        {
+                            if (!doc.Username.Equals(docModel.Username) || !doc.Hash.Equals(docModel.Hash)) continue;
+                            model = doc;
+                            return true;
+                        }
+                        else
+                        {
+                            if (!doc.Username.Equals(docModel.Username)) continue;
+                            model = doc;
+                            return true;
+                        }
                     }
-
-                    var serializer = new JsonSerializer();
-
-                    var doctor = serializer.Deserialize<Doctor>(reader);
-                    doctors.Add(doctor);
                 }
-
-                foreach (var doc in doctors)
+                else if (model.GetType() == typeof(Patient))
                 {
-                    if (!doc.Username.Equals(((Doctor)model).Username)) continue;
-                    if (!doc.Hash.Equals(((Doctor)model).Hash)) continue;
-                    model = doc;
-                    bRead = true;
-                }
-                */
-                var json = File.ReadAllText($@"{SaveLocation}\Doctor.json");
-                var list = JsonConvert.DeserializeObject<List<Doctor>>(json);
-                _doctors = list;
 
-                foreach (var doc in _doctors)
+                }
+                else if (model.GetType() == typeof(HealthInsurance))
                 {
-                    return doc.Username == ((Doctor) model).Username;
+
                 }
+
+                return bRead;
             }
-            else if (model.GetType() == typeof(Patient))
+            catch (NullReferenceException e)
             {
-
-            }
-            else if (model.GetType() == typeof(HealthInsurance))
-            {
-
-            }
-
-            return bRead;
+                Console.WriteLine(e);
+                throw new UserDoesNotExist();
+            }            
         }
         #endregion JSON
 
@@ -200,7 +195,7 @@ namespace Patientenverwaltung
             throw new NotImplementedException();
         }
 
-        private static bool ReadXml(ref Model model, string extraOptions)
+        private static bool ReadXml(ref Doctor model, string extraOptions)
         {
             throw new NotImplementedException();
         }
@@ -217,7 +212,7 @@ namespace Patientenverwaltung
             throw new NotImplementedException();
         }
 
-        private static bool ReadSql(ref Model model, string extraOptions)
+        private static bool ReadSql(ref Doctor model, string extraOptions)
         {
             throw new NotImplementedException();
         }

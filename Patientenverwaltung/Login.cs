@@ -1,31 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Globalization;
 using System.IO;
 using System.Reflection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Patientenverwaltung.Properties;
-using static System.Windows.Forms.Keys;
+using System.Windows.Forms;
 
 namespace Patientenverwaltung
 {
     public partial class Login : Form
     {
-        public string Password { get; set; }
-        public string Username { get; set; }
-        public ErrorProvider ErrorProvider { get; set; }
-        public static string DoctorJsonPath { get; set; }
-        public static string SettingsJsonPath { get; set; }
-
-        private bool _bFirstStart = false;
+        private bool _bFirstStart;
 
         public Login()
         {
@@ -50,9 +33,15 @@ namespace Patientenverwaltung
                 settingsCtrl1.Visible = true;
 
                 MessageBox.Show(
-                    "Dies ist Ihr erster Start dieses Programmes. Bitte legen sie die nötigen Einstellungen für das Programm fest.");
+                    Strings.Login_Login_Dies_ist_Ihr_erster_Start_dieses_Programmes__Bitte_legen_sie_die_nötigen_Einstellungen_für_das_Programm_fest_);
             }
         }
+
+        public string Password { get; set; }
+        public string Username { get; set; }
+        public ErrorProvider ErrorProvider { get; set; }
+        public static string DoctorJsonPath { get; set; }
+        public static string SettingsJsonPath { get; set; }
 
         private void IntializeSettings()
         {
@@ -64,122 +53,122 @@ namespace Patientenverwaltung
 
         private static void CreateJsonFile(string jsonPath)
         {
-            using (var file = File.CreateText(jsonPath))
+            using (File.CreateText(jsonPath))
             {
-                                
             }
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            // Validate login data
-            ValidateInput();
+            try
+            {
+                // Validate login data
+                ValidateInput();
+
+                // Get User with hash
+                var doctor = new Doctor {Username = txtUserName.Text};
+
+                if (!Connector.Read(ref doctor))
+                {
+                    ErrorProvider.SetError(btnLogin, "User existiert nicht");
+                    return;
+                }
+
+                if (PasswordStorage.VerifyPassword(txtPassword.Text, doctor.Hash))
+                {
+                    Program.OpenMainFormOnClose = true;
+                    Program.Doctor = doctor;
+                    Close();
+                }
+                else
+                {
+                    ErrorProvider.SetError(btnLogin, "Login Daten stimmen nicht überein");
+                }
+            }
+            catch (UserDoesNotExist)
+            {
+                var result =
+                MessageBox.Show($@"User '{txtUserName.Text}' existiert nicht. Soll dieser angelegt werden ?", "",
+                    MessageBoxButtons.OKCancel);
+                  
+                if (result == DialogResult.OK)
+                {
+                    CreateUser(false);
+                }
+            }
         }
 
         private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                // Validate login data
+            if (e.KeyChar == (char) Keys.Enter)
                 ValidateInput();
-            }
         }
-
-        /*
-        private void ValidateInput()
-        {
-            try
-            {
-                // Checks if User is known
-                Password = txtPassword.Text;
-                Username = txtUserName.Text;
-
-                var user = JObject.Parse(File.ReadAllText($@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\Users.json"));
-                var result = JsonConvert.DeserializeObject<User>(user.ToString());
-                var test = result.Username;
-            }
-            catch (FileNotFoundException e)
-            {
-                Console.WriteLine(e);
-
-//                if (MessageBox.Show("User existiert nicht. Hinzufügen ?", "", MessageBoxButtons.OKCancel));
-                var user = new User()
-                {
-                    Username = Username,
-                    Password = Password
-                };
-
-                var oUserJObject = (JObject) JToken.FromObject(user);
-                // Create File
-                using (var file = File.Create($@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\Users.json"))
-                {
-                    Byte[] json = new UTF8Encoding(true).GetBytes(oUserJObject.ToString());
-                    file.Write(json, 0, json.Length);
-                }
-            }
-           
-            
-            var hash = PasswordStorage.CreateHash(this.Password);
-            
-        }
-        */
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
             // Validate Input
             if (!ValidateInput()) return;
 
+            CreateUser();            
+        }
+
+        private void CreateUser(bool check = true)
+        {
             // Check if username already exists
-            if (!CheckCredentials(this.txtUserName.Text))
+            if (check)
             {
-                ErrorProvider.SetError(btnCreate, "Username already exists");
-                return;
-            }
+                if (!CheckCredentials(txtUserName.Text))
+                {
+                    ErrorProvider.SetError(btnCreate, "Benutzername existiert bereits");
+                    return;
+                }
+            }            
 
             var doctor = new Doctor
             {
-                Username = this.txtUserName.Text,
-                Hash = PasswordStorage.CreateHash(this.txtPassword.Text),
+                Username = txtUserName.Text,
+                Hash = PasswordStorage.CreateHash(txtPassword.Text),
                 Patients = new List<Patient>()
             };
 
             Connector.Create(doctor);
+
+            // Login after 
+
+            Program.OpenMainFormOnClose = true;
+
+            Close();
         }
 
         private static bool CheckCredentials(string username, string password = "")
         {
-            var bChecked = false;
+            bool bChecked;
             if (password.Equals(string.Empty))
             {
                 // Just look if Username exists                
                 var doctor = new Doctor {Username = username};
 
-                bChecked = !Connector.Read(doctor);
+                bChecked = !Connector.Read(ref doctor);
             }
             else
             {
                 // Check if credentials match with saved ones
-                var doctor = new Doctor { Username = username, Hash = password};
+                var doctor = new Doctor {Username = username, Hash = password};
 
-                bChecked = !Connector.Read(doctor);
+                bChecked = !Connector.Read(ref doctor);
             }
 
             return bChecked;
         }
 
-        private static string GetJson(string jsonPath)
-        {
-            return File.ReadAllText(jsonPath);
-        }
-
         private bool ValidateInput()
         {
             var bValidated = false;
-            foreach (Control item in this.Controls)
+            foreach (Control item in Controls)
             {
                 if (item.GetType() != typeof(TextBox)) continue;
 
-                bValidated = (item.Text != null  && !item.Text.Equals(string.Empty));
+                bValidated = item.Text != null && !item.Text.Equals(string.Empty);
 
                 ErrorProvider.SetError(item, bValidated ? $@"" : $@"Feld darf nicht leer sein");
             }
@@ -200,5 +189,9 @@ namespace Patientenverwaltung
             btnLogin.Visible = true;
             btnEditSettings.Visible = true;
         }
+    }
+
+    internal class UserDoesNotExist : Exception
+    {
     }
 }

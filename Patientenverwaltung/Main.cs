@@ -23,6 +23,7 @@ namespace Patientenverwaltung
         //public string HealthInsuranceJsonPath { get; set; }
         //public string TreatmentJsonPath { get; set; }
         public string DoctorJsonPath { get; set; }
+        public Doctor Doctor { get; set; }
 
         public Main()
         {
@@ -35,6 +36,13 @@ namespace Patientenverwaltung
 
             // Look for JSON Path
             InitializeJson();            
+        }
+
+        public Main(Doctor doctor) : this()
+        {
+            Doctor = doctor;
+
+            this.Text = $@"{Doctor.Username} ist eingeloggt";
         }
 
         private void InitializeJson()

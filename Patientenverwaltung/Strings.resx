@@ -126,4 +126,7 @@
   <data name="HealthInsuranceCtrl_btnSave_Click_FillAllFieldsWarning" xml:space="preserve">
     <value>Bitte alle Felder ausfüllen</value>
   </data>
+  <data name="Login_Login_Dies_ist_Ihr_erster_Start_dieses_Programmes__Bitte_legen_sie_die_nötigen_Einstellungen_für_das_Programm_fest_" xml:space="preserve">
+    <value>Dies ist Ihr erster Start dieses Programmes. Bitte legen sie die nötigen Einstellungen für das Programm fest.</value>
+  </data>
 </root>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Patientenverwaltung
 {
-    internal class Doctor : Model
+    public class Doctor : Model
     {
         public string Name { get; set; }
         public string Id { get; set; }
