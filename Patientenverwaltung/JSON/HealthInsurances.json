@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "AOK",
+    "InsuranceID": 0,
+    "Street": "asda",
+    "StreetNumber": 12,
+    "Postalcode": 12,
+    "City": "asd",
+    "State": 0
+  },
+  {
+    "Name": "AOK2",
+    "InsuranceID": 0,
+    "Street": "asda",
+    "StreetNumber": 12,
+    "Postalcode": 12,
+    "City": "asd",
+    "State": 1
+  }
+]

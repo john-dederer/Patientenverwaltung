@@ -18,10 +18,16 @@ namespace Patientenverwaltung
     /// </summary>
     static class Connector
     {
-        private static List<Doctor> _doctors;
         public static bool Initialized { get; set; }
         public static string SaveType { get; set; }
         public static string SaveLocation { get; set; }
+
+        public static List<HealthInsurance> HealthInsurances { get; private set; }
+
+        public static List<Doctor> Doctors { get; private set; }
+
+        // Current logged in Doctor
+        public static Doctor Doctor { get; set; }
 
         private static void Initialize()
         {
@@ -43,13 +49,13 @@ namespace Patientenverwaltung
         }
 
         public static void Create(Model model)
-        {           
+        {
             if (!Initialized) Initialize();
 
             if (SaveType.Equals("JSON"))
             {
                 CreateJson(model);
-                
+
             }
             else if (SaveType.Equals("SQL"))
             {
@@ -58,7 +64,7 @@ namespace Patientenverwaltung
             else if (SaveType.Equals("XML"))
             {
                 CreateXml(model);
-            }            
+            }
         }
 
         /// <summary>
@@ -88,26 +94,78 @@ namespace Patientenverwaltung
             return bRead;
         }
 
+        public static bool Read(ref HealthInsurance model, string extraOptions = "")
+        {
+            if (!Initialized) Initialize();
+
+            var bRead = false;
+
+            if (SaveType.Equals("JSON"))
+            {
+                bRead = ReadJson(ref model, extraOptions);
+
+            }
+            else if (SaveType.Equals("SQL"))
+            {
+                bRead = ReadSql(ref model, extraOptions);
+            }
+            else if (SaveType.Equals("XML"))
+            {
+                bRead = ReadXml(ref model, extraOptions);
+            }
+
+            return bRead;
+        }
+
         #region JSON
         private static void CreateJson(Model model)
         {
             if (model.GetType() == typeof(Doctor))
-            {                
+            {
                 var list = JsonConvert.DeserializeObject<List<Doctor>>(File.ReadAllText($@"{SaveLocation}\Doctor.json"));
-                _doctors = list ?? new List<Doctor>();
-                _doctors.Add((Doctor)model);
+                Doctors = list ?? new List<Doctor>();
+                Doctors.Add((Doctor)model);
 
-                var convertedJson = JsonConvert.SerializeObject(_doctors, Formatting.Indented);
+                var convertedJson = JsonConvert.SerializeObject(Doctors, Formatting.Indented);
 
                 File.WriteAllText($@"{SaveLocation}\Doctor.json", convertedJson);
             }
             else if (model.GetType() == typeof(Patient))
             {
-                
+                var list = JsonConvert.DeserializeObject<List<Doctor>>(File.ReadAllText($@"{SaveLocation}\Doctor.json"));
+                Doctors = list ?? new List<Doctor>();
+
+                foreach (var doctor in Doctors)
+                {
+                    // Search current logged in doctor
+                    if (doctor.Username != Doctor.Username) continue;
+
+                    if (doctor.Patients == null) doctor.Patients = new List<Patient>();
+
+                    // Search if patient already exists
+                    foreach (var patient in doctor.Patients)
+                    {
+                        if (patient.Key == ((Patient) model).Key) throw new PatientAlreadyExistsExcepetion();
+                    }
+
+                    // Add then
+                    doctor.Patients.Add((Patient)model);         
+                }
+
+                var convertedJson = JsonConvert.SerializeObject(Doctors, Formatting.Indented);
+
+                File.WriteAllText($@"{SaveLocation}\Doctor.json", convertedJson);
+
             }
             else if (model.GetType() == typeof(HealthInsurance))
             {
+                var list = JsonConvert.DeserializeObject<List<HealthInsurance>>(File.ReadAllText($@"{SaveLocation}\HealthInsurances.json"));
+                HealthInsurances = list ?? new List<HealthInsurance>();
+                HealthInsurances.Add((HealthInsurance)model);
 
+                var convertedJson = JsonConvert.SerializeObject(HealthInsurances, Formatting.Indented);
+
+                File.WriteAllText($@"{SaveLocation}\HealthInsurances.json", convertedJson);
             }
             var json = JsonConvert.SerializeObject(model);
 
@@ -119,60 +177,65 @@ namespace Patientenverwaltung
             if (File.Exists($@"{SaveLocation}\Doctor.json"))
             {
                 var list = JsonConvert.DeserializeObject<List<Doctor>>(File.ReadAllText($@"{SaveLocation}\Doctor.json"));
-                _doctors = list;
+                Doctors = list;
             }
             else
             {
                 using (var file = File.CreateText($@"{SaveLocation}\Doctor.json"))
                 {
                     // Since the file doesnt exist, we can initialize a new list 
-                    _doctors = new List<Doctor>();
+                    Doctors = new List<Doctor>();
                 }
-            }            
+            }
+
+            if (File.Exists($@"{SaveLocation}\HealthInsurances.json"))
+            {
+                var list = JsonConvert.DeserializeObject<List<HealthInsurance>>(File.ReadAllText($@"{SaveLocation}\HealthInsurances.json"));
+                HealthInsurances = list;
+            }
+            else
+            {
+                using (var file = File.CreateText($@"{SaveLocation}\HealthInsurances.json"))
+                {
+                    // Since the file doesnt exist, we can initialize a new list 
+                    HealthInsurances = new List<HealthInsurance>();
+                }
+            }
         }
 
-        private static bool ReadJson(ref Doctor model, string extraOptions)
+        private static bool ReadJson(ref Doctor model, string extraOptions = "")
         {
             try
             {
                 var bRead = false;
 
-                if (model.GetType() == typeof(Doctor))
+                if (!File.Exists($@"{SaveLocation}\Doctor.json")) return false;
+
+                var json = File.ReadAllText($@"{SaveLocation}\Doctor.json");
+
+                if (json == string.Empty) throw new UserDoesNotExist();
+
+                var list = JsonConvert.DeserializeObject<List<Doctor>>(json);
+                Doctors = list;
+
+                var docModel = (Doctor)model;
+                foreach (var doc in Doctors)
                 {
-                    if (!File.Exists($@"{SaveLocation}\Doctor.json")) return false;
-
-                    var json = File.ReadAllText($@"{SaveLocation}\Doctor.json");
-
-                    if (json == string.Empty) throw new UserDoesNotExist();
-
-                    var list = JsonConvert.DeserializeObject<List<Doctor>>(json);
-                    _doctors = list;
-
-                    var docModel = (Doctor)model;
-                    foreach (var doc in _doctors)
+                    if (extraOptions == "password")
                     {
-                        if (extraOptions == "password")
-                        {
-                            if (!doc.Username.Equals(docModel.Username) || !doc.Hash.Equals(docModel.Hash)) continue;
-                            model = doc;
-                            return true;
-                        }
-                        else
-                        {
-                            if (!doc.Username.Equals(docModel.Username)) continue;
-                            model = doc;
-                            return true;
-                        }
+                        if (!doc.Username.Equals(docModel.Username) || !doc.Hash.Equals(docModel.Hash)) continue;
+                        model = doc;
+                        return true;
+                    }
+                    else
+                    {
+                        if (!doc.Username.Equals(docModel.Username)) continue;
+                        model = doc;
+                        return true;
                     }
                 }
-                else if (model.GetType() == typeof(Patient))
-                {
 
-                }
-                else if (model.GetType() == typeof(HealthInsurance))
-                {
 
-                }
 
                 return bRead;
             }
@@ -180,7 +243,40 @@ namespace Patientenverwaltung
             {
                 Console.WriteLine(e);
                 throw new UserDoesNotExist();
-            }            
+            }
+        }
+
+        private static bool ReadJson(ref HealthInsurance model, string extraOptions = "")
+        {
+            try
+            {
+                var bRead = false;
+
+                if (!File.Exists($@"{SaveLocation}\HealthInsurances.json")) return false;
+
+                var json = File.ReadAllText($@"{SaveLocation}\HealthInsurances.json");
+
+                if (json == string.Empty) throw new HealthInsurancesDoesNotExist();
+
+                var list = JsonConvert.DeserializeObject<List<HealthInsurance>>(json);
+                HealthInsurances = list;
+
+                var healthInsuranceModel = (HealthInsurance)model;
+                foreach (var healthInsurance in HealthInsurances)
+                {
+                    if (!healthInsurance.Name.Equals(healthInsuranceModel.Name)) continue;
+                    model = healthInsurance;
+                    return true;
+                }
+
+                return bRead;
+
+            }
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine(e);
+                throw new HealthInsurancesDoesNotExist();
+            }
         }
         #endregion JSON
 
@@ -196,6 +292,11 @@ namespace Patientenverwaltung
         }
 
         private static bool ReadXml(ref Doctor model, string extraOptions)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static bool ReadXml(ref HealthInsurance model, string extraOptions)
         {
             throw new NotImplementedException();
         }
@@ -216,6 +317,20 @@ namespace Patientenverwaltung
         {
             throw new NotImplementedException();
         }
+
+        private static bool ReadSql(ref HealthInsurance model, string extraOptions)
+        {
+            throw new NotImplementedException();
+        }
         #endregion SQL 
+    }
+
+    internal class PatientAlreadyExistsExcepetion
+        : Exception
+    {
+    }
+
+    internal class HealthInsurancesDoesNotExist : Exception
+    {
     }
 }

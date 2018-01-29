@@ -40,6 +40,16 @@ namespace Patientenverwaltung
             ErrorProvider = new ErrorProvider();
         }
 
+        public void Init()
+        {            
+            if (Connector.HealthInsurances == null) return;
+            lstBoxHealthInsurance.Items.Clear();
+            foreach (var healthInsurance in Connector.HealthInsurances)
+            {
+                lstBoxHealthInsurance.Items.Add(healthInsurance);
+            }
+        }
+
         internal void SetParent(Main main1)
         {
             this.Main = main1;
@@ -68,18 +78,20 @@ namespace Patientenverwaltung
                 if (!bValidated) return;
 
                 HealthInsurance.Name = Convert.ToString(txtBoxName.Text);
-                HealthInsurance.InsuranceID = Convert.ToInt64(txtBoxNumber.Text);
+                //HealthInsurance.InsuranceID = Convert.ToInt64(txtBoxNumber.Text); // This is bound to a Patient and not part of the general healthinsruance
                 HealthInsurance.Street = Convert.ToString(txtBoxStreet.Text);
                 HealthInsurance.StreetNumber = Convert.ToInt32(txtBoxStreetNumber.Text);
                 HealthInsurance.Postalcode = Convert.ToInt32(txtBoxPostalCode.Text);
                 HealthInsurance.City = Convert.ToString(txtBoxCity.Text);
-                HealthInsurance.State = rdBtnPrivate.Enabled
+                HealthInsurance.State = rdBtnPrivate.Checked
                     ? StatusHealthInsurance.Private
-                    : (rdBtnByLaw.Enabled ? StatusHealthInsurance.ByLaw : StatusHealthInsurance.Private);
+                    : (rdBtnByLaw.Checked ? StatusHealthInsurance.ByLaw : StatusHealthInsurance.Private);
+               
+                Connector.Create(HealthInsurance);
 
-                var task = AddToDatabaseTask(HealthInsurance);
+                Init();
+
                 lstBoxHealthInsurance.Refresh();
-                task.Wait();
 
                 Main.HealthInsurance = HealthInsurance;
             }
@@ -94,19 +106,17 @@ namespace Patientenverwaltung
         {
             try
             {
-                var textBoxData = string.Empty;
-                bool bValidated = false;
+                var bValidated = true;
                 foreach (Control item in this.Controls)
                 {
                     if (item.GetType() != typeof(TextBox)) continue;
-                    textBoxData += item.Text;
 
                     if (!ValidateString(item))
                     {
                         bValidated = false;
                     }
                 }
-                return bValidated /*(textBoxData != string.Empty)*/;
+                return bValidated;
             }
             catch { return false; }
         }
@@ -128,7 +138,19 @@ namespace Patientenverwaltung
 
         private void lstBoxHealthInsurance_MouseClick(object sender, MouseEventArgs e)
         {
-            HealthInsurance = (HealthInsurance)lstBoxHealthInsurance.SelectedItem;
+            if (ReferenceEquals(lstBoxHealthInsurance.SelectedItem, "")) return;
+            if (lstBoxHealthInsurance != null && HealthInsurance == (HealthInsurance)lstBoxHealthInsurance.SelectedItem) return;
+
+            if (lstBoxHealthInsurance != null) HealthInsurance = (HealthInsurance) lstBoxHealthInsurance.SelectedItem;
+
+            // Fill textboxes
+            txtBoxCity.Text = HealthInsurance.City;
+            txtBoxName.Text = HealthInsurance.Name;
+            txtBoxNumber.Text = @"0";
+            txtBoxPostalCode.Text = Convert.ToString(HealthInsurance.Postalcode);
+            txtBoxStreet.Text = HealthInsurance.Street;
+            txtBoxStreetNumber.Text = Convert.ToString(HealthInsurance.StreetNumber);
+            rdBtnPrivate.Checked = HealthInsurance.State.Equals(StatusHealthInsurance.Private);
         }
 
         public void SetValues(HealthInsurance healthInsurance)
@@ -198,6 +220,25 @@ namespace Patientenverwaltung
             var bValidated = (!rdBtnPrivate.Checked && !rdBtnByLaw.Checked);
             ErrorProvider.SetError(rdBtnByLaw,  bValidated? "Bitte Art der Versicherung auswählen" : "");
             return bValidated;
+        }
+
+        private void btnChoose_Click(object sender, EventArgs e)
+        {
+            if (lstBoxHealthInsurance.SelectedItem != null)
+            {
+                Main.HealthInsurance = HealthInsurance;
+                Main.SetHealthInsurance(HealthInsurance);
+                Main.MakeHealthInsuranceVisible(false);
+            }
+            else
+            {
+                ErrorProvider.SetError(btnChoose, "Keine Versicherung in der Liste ausgewählt");
+            }
+        }
+
+        public void SetSelectedItem(HealthInsurance getHealthInsurance)
+        {
+            lstBoxHealthInsurance.SelectedItem = getHealthInsurance;
         }
     }
 }

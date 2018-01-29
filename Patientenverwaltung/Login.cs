@@ -132,7 +132,7 @@ namespace Patientenverwaltung
             };
 
             Connector.Create(doctor);
-
+            Connector.Doctor = doctor;
             // Login after 
 
             Program.OpenMainFormOnClose = true;

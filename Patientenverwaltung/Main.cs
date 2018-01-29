@@ -41,7 +41,7 @@ namespace Patientenverwaltung
         public Main(Doctor doctor) : this()
         {
             Doctor = doctor;
-
+            Connector.Doctor = Doctor;
             this.Text = $@"{Doctor.Username} ist eingeloggt";
         }
 
@@ -103,9 +103,12 @@ namespace Patientenverwaltung
         }
 
         private void btnchangeHealthInsurance_Click(object sender, EventArgs e)
-        {
+        {            
             createPatientCtrl1.Visible = !createPatientCtrl1.Visible;
 
+            healthInsuranceCtrl1.Init();
+
+            if (createPatientCtrl1.GetHealthInsurance() != null) healthInsuranceCtrl1.SetSelectedItem(createPatientCtrl1.GetHealthInsurance());
             healthInsuranceCtrl1.Visible = !healthInsuranceCtrl1.Visible;
         }
 
@@ -125,6 +128,11 @@ namespace Patientenverwaltung
             healthInsuranceCtrl1.Visible = false;
             btnCreatePatient.Visible = true;
             btnchangeHealthInsurance.Visible = false;
+        }
+
+        public void SetHealthInsurance(HealthInsurance healthInsurance)
+        {
+            createPatientCtrl1.SetHealthInsurance(healthInsurance);
         }
     }
 }

@@ -4,6 +4,55 @@
     "Id": null,
     "Username": "as",
     "Hash": "sha1:64000:18:Nqu5k4G4cPr84h8ywi6QmkPVxhTVv4Xj:/xllaLEvpowYALppwkOtPfKv",
-    "Patients": []
+    "Patients": [
+      {
+        "FirstName": "John",
+        "SecondName": "asdasd",
+        "Street": "dasdasdasdasd",
+        "StreetNumber": 12,
+        "Postalcode": 12,
+        "City": "12",
+        "InsuranceID": 0,
+        "HealthInsurance": {
+          "Name": null,
+          "InsuranceID": 0,
+          "Street": null,
+          "StreetNumber": 0,
+          "Postalcode": 0,
+          "City": null,
+          "State": 0
+        },
+        "BitBirthday": "0001-01-01T00:00:00",
+        "Birthday": "2018-01-29T00:00:00",
+        "Phonenumber": 121,
+        "SpecialTraits": [],
+        "Treatments": null,
+        "Key": "--01.01.0001 00:00:00"
+      },
+      {
+        "FirstName": "John",
+        "SecondName": "test",
+        "Street": "123",
+        "StreetNumber": 123,
+        "Postalcode": 123123,
+        "City": "123",
+        "InsuranceID": 0,
+        "HealthInsurance": {
+          "Name": null,
+          "InsuranceID": 0,
+          "Street": null,
+          "StreetNumber": 0,
+          "Postalcode": 0,
+          "City": null,
+          "State": 0
+        },
+        "BitBirthday": "0001-01-01T00:00:00",
+        "Birthday": "2018-01-30T00:00:00",
+        "Phonenumber": 123,
+        "SpecialTraits": [],
+        "Treatments": null,
+        "Key": "test-John-2018-01-30"
+      }
+    ]
   }
 ]

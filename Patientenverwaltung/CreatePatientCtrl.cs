@@ -16,6 +16,7 @@ namespace Patientenverwaltung
         public Main Main { get; set; }
         public ErrorProvider ErrorProvider { get; set; }
         public Patient Patient { get; set; }
+        public HealthInsurance HealthInsurance { get; private set; }
 
         public CreatePatientCtrl()
         {
@@ -45,26 +46,24 @@ namespace Patientenverwaltung
 
         private void SetValues()
         {
-            Patient = new Patient();
-
-            foreach (var control in this.Controls)
+            Patient = new Patient
             {
-                if (control.GetType() != typeof(TextBox)) continue;
+                City = txtBoxCity.Text,
+                FirstName = txtBoxFirstName.Text,
+                HealthInsurance = Main.HealthInsurance,
+                InsuranceID = Main.HealthInsurance.InsuranceID,
+                Phonenumber = Convert.ToInt32(txtBoxPhoneNumber.Text),
+                Postalcode = Convert.ToInt32(txtBoxPostalCode.Text),
+                SecondName = txtBoxSecondName.Text,
+                Street = txtBoxStreet.Text,
+                StreetNumber = Convert.ToInt32(txtBoxStreetNumber.Text),
+                Birthday = Convert.ToDateTime(datePickerBirthday.Value.ToString("yyyy-MM-dd")),
+                SpecialTraits = lstBoxSpecialTraits.Items.Cast<String>().ToList()
+            };
+            Patient.SetKey();
 
-                var item = (TextBox) control;
-                if (item.Name.Equals(txtBoxCity.Name)) Patient.City = item.Text;
-                if (item.Name.Equals(txtBoxFirstName.Name)) Patient.FirstName = item.Text;
-                if (item.Name.Equals(txtBoxHealthInsurance.Name)) Patient.HealthInsurance = Main.HealthInsurance;
-                if (item.Name.Equals(txtBoxInsuranceID.Name)) Patient.InsuranceID = Main.HealthInsurance.InsuranceID;
-                if (item.Name.Equals(txtBoxPhoneNumber.Name)) Patient.Phonenumber = Convert.ToInt32(item.Text);
-                if (item.Name.Equals(txtBoxPostalCode.Name)) Patient.Postalcode = Convert.ToInt32(item.Text);
-                if (item.Name.Equals(txtBoxSecondName.Name)) Patient.SecondName = item.Text;
-                if (item.Name.Equals(txtBoxStreet.Name)) Patient.Street = item.Text;
-                if (item.Name.Equals(txtBoxStreetNumber.Name)) Patient.StreetNumber = Convert.ToInt32(item.Text);
-
-                Patient.Birthday = Convert.ToDateTime(datePickerBirthday.Value.ToString("yyyy-MM-dd"));
-
-            }
+            // Since patients belong to a doctor we provide the logged in doctor context
+            Connector.Create(Patient);
         }
 
         private bool ValidateInput()
@@ -147,6 +146,19 @@ namespace Patientenverwaltung
         private void txtBoxPostalCode_Validating(object sender, CancelEventArgs e)
         {
             ValidateNumber(txtBoxPostalCode, e);
+        }
+
+        public void SetHealthInsurance(HealthInsurance healthInsurance)
+        {
+            txtBoxHealthInsurance.Text = healthInsurance.Name;
+            txtBoxInsuranceID.Text = healthInsurance.InsuranceID.ToString();
+
+            HealthInsurance = healthInsurance;
+        }
+
+        public HealthInsurance GetHealthInsurance()
+        {
+            return HealthInsurance;
         }
     }
 }

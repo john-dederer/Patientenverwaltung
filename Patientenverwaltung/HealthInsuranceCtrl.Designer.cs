@@ -47,6 +47,7 @@
             this.rdBtnPrivate = new System.Windows.Forms.RadioButton();
             this.rdBtnByLaw = new System.Windows.Forms.RadioButton();
             this.btnNew = new System.Windows.Forms.Button();
+            this.btnChoose = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lstBoxHealthInsurance
@@ -54,7 +55,7 @@
             this.lstBoxHealthInsurance.FormattingEnabled = true;
             this.lstBoxHealthInsurance.Location = new System.Drawing.Point(29, 51);
             this.lstBoxHealthInsurance.Name = "lstBoxHealthInsurance";
-            this.lstBoxHealthInsurance.Size = new System.Drawing.Size(231, 420);
+            this.lstBoxHealthInsurance.Size = new System.Drawing.Size(231, 407);
             this.lstBoxHealthInsurance.TabIndex = 0;
             this.lstBoxHealthInsurance.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstBoxHealthInsurance_MouseClick);
             // 
@@ -223,10 +224,21 @@
             this.btnNew.UseVisualStyleBackColor = true;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
+            // btnChoose
+            // 
+            this.btnChoose.Location = new System.Drawing.Point(173, 472);
+            this.btnChoose.Name = "btnChoose";
+            this.btnChoose.Size = new System.Drawing.Size(112, 23);
+            this.btnChoose.TabIndex = 42;
+            this.btnChoose.Text = "Wählen";
+            this.btnChoose.UseVisualStyleBackColor = true;
+            this.btnChoose.Click += new System.EventHandler(this.btnChoose_Click);
+            // 
             // HealthInsuranceCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnChoose);
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.rdBtnByLaw);
             this.Controls.Add(this.rdBtnPrivate);
@@ -274,5 +286,6 @@
         private System.Windows.Forms.RadioButton rdBtnPrivate;
         private System.Windows.Forms.RadioButton rdBtnByLaw;
         private System.Windows.Forms.Button btnNew;
+        private System.Windows.Forms.Button btnChoose;
     }
 }
