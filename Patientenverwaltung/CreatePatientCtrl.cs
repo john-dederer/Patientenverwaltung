@@ -46,6 +46,8 @@ namespace Patientenverwaltung
 
         private void SetValues()
         {
+            // TODO: Add vallidation
+
             Patient = new Patient
             {
                 City = txtBoxCity.Text,
@@ -58,7 +60,8 @@ namespace Patientenverwaltung
                 Street = txtBoxStreet.Text,
                 StreetNumber = Convert.ToInt32(txtBoxStreetNumber.Text),
                 Birthday = Convert.ToDateTime(datePickerBirthday.Value.ToString("yyyy-MM-dd")),
-                SpecialTraits = lstBoxSpecialTraits.Items.Cast<String>().ToList()
+                SpecialTraits = lstBoxSpecialTraits.Items.Cast<String>().ToList(),
+                //Treatments = lstBoxTreatments.Items
             };
             Patient.SetKey();
 
@@ -159,6 +162,16 @@ namespace Patientenverwaltung
         public HealthInsurance GetHealthInsurance()
         {
             return HealthInsurance;
+        }
+
+        private void txtBoxSpecialTraits_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != (char) Keys.Enter) return;
+            if (txtBoxSpecialTraits.Text != string.Empty)
+            {
+                lstBoxSpecialTraits.Items.Add(txtBoxSpecialTraits.Text);
+
+            }
         }
     }
 }

@@ -1,23 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Patientenverwaltung
 {
+    [Serializable]
     public class Treatment : Model
     {
-        [Key]
-        [Column(Order = 1)]
+        public string Key { get; }
         public DateTime Date { get; set; }
-        [Key]
-        [Column(Order = 2)]
-        public int Number {get; set; }
-
         public String Description { get; set; }
         public String Other { get; set; }
+
+        public Treatment()
+        {
+            Key = $@"{Date}|{Description}|{Other}";
+        }
+
+        protected bool Equals(Treatment other)
+        {
+            return Key == other.Key;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == this.GetType() && Equals((Treatment)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Key.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $@"{Date}|{Description}|{Other}";
+        }
+    }
+
+    public static class TreatmentCounter
+    {
+        public static int Id;
     }
 }

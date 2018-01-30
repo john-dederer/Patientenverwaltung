@@ -31,6 +31,8 @@ namespace Patientenverwaltung
 
             createPatientCtrl1  .SetParent(this);
             healthInsuranceCtrl1.SetParent(this);
+            //logTreatmentsCtrl1.SetParent(this);
+
             Patient = new Patient();
             HealthInsurance = new HealthInsurance();
 
@@ -97,7 +99,7 @@ namespace Patientenverwaltung
             createPatientCtrl1.Visible = !createPatientCtrl1.Visible;
 
             btnchangeHealthInsurance.Visible = !btnchangeHealthInsurance.Visible;
-
+            btnLogTreatments.Visible = !btnLogTreatments.Visible;
             // Vorerst Button ausschalten
             btnCreatePatient.Visible = !btnCreatePatient.Visible;
         }
@@ -128,11 +130,27 @@ namespace Patientenverwaltung
             healthInsuranceCtrl1.Visible = false;
             btnCreatePatient.Visible = true;
             btnchangeHealthInsurance.Visible = false;
+            btnLogTreatments.Visible = false;
         }
 
         public void SetHealthInsurance(HealthInsurance healthInsurance)
         {
             createPatientCtrl1.SetHealthInsurance(healthInsurance);
+        }
+
+        private void btnLogTreatments_Click(object sender, EventArgs e)
+        {
+            createPatientCtrl1.Visible = !createPatientCtrl1.Visible;
+
+            treatmentsCtrl1.Visible = !treatmentsCtrl1.Visible;
+            //logTreatmentsCtrl1.Init();
+
+            //logTreatmentsCtrl1.Visible = !logTreatmentsCtrl1.Visible;
+        }
+
+        public void MakeLogTreatmentsVisible(bool b)
+        {
+            
         }
     }
 }

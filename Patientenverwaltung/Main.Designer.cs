@@ -28,12 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            Patientenverwaltung.Patient patient2 = new Patientenverwaltung.Patient();
             this.txtBoxSearchPatient = new System.Windows.Forms.TextBox();
             this.btnCreatePatient = new System.Windows.Forms.Button();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.btnchangeHealthInsurance = new System.Windows.Forms.Button();
             this.healthInsuranceCtrl1 = new Patientenverwaltung.HealthInsuranceCtrl();
             this.createPatientCtrl1 = new Patientenverwaltung.CreatePatientCtrl();
+            this.btnLogTreatments = new System.Windows.Forms.Button();
+            this.treatmentsCtrl1 = new Patientenverwaltung.TreatmentsCtrl();
             this.SuspendLayout();
             // 
             // txtBoxSearchPatient
@@ -77,7 +81,9 @@
             // 
             // healthInsuranceCtrl1
             // 
+            this.healthInsuranceCtrl1.HealthInsurance = null;
             this.healthInsuranceCtrl1.Location = new System.Drawing.Point(220, 0);
+            this.healthInsuranceCtrl1.Main = null;
             this.healthInsuranceCtrl1.Name = "healthInsuranceCtrl1";
             this.healthInsuranceCtrl1.Size = new System.Drawing.Size(771, 513);
             this.healthInsuranceCtrl1.TabIndex = 4;
@@ -86,16 +92,53 @@
             // createPatientCtrl1
             // 
             this.createPatientCtrl1.Location = new System.Drawing.Point(220, 0);
+            this.createPatientCtrl1.Main = null;
             this.createPatientCtrl1.Name = "createPatientCtrl1";
+            patient2.Base = null;
+            patient2.Birthday = new System.DateTime(((long)(0)));
+            patient2.City = null;
+            patient2.FirstName = null;
+            patient2.HealthInsurance = null;
+            patient2.InsuranceID = ((long)(0));
+            patient2.Key = "--01.01.0001 00:00:00";
+            patient2.Phonenumber = 0;
+            patient2.Postalcode = 0;
+            patient2.SecondName = null;
+            patient2.SpecialTraits = null;
+            patient2.Street = null;
+            patient2.StreetNumber = 0;
+            patient2.Treatments = null;
+            this.createPatientCtrl1.Patient = patient2;
             this.createPatientCtrl1.Size = new System.Drawing.Size(771, 513);
             this.createPatientCtrl1.TabIndex = 3;
             this.createPatientCtrl1.Visible = false;
+            // 
+            // btnLogTreatments
+            // 
+            this.btnLogTreatments.Location = new System.Drawing.Point(12, 113);
+            this.btnLogTreatments.Name = "btnLogTreatments";
+            this.btnLogTreatments.Size = new System.Drawing.Size(187, 23);
+            this.btnLogTreatments.TabIndex = 6;
+            this.btnLogTreatments.Text = "Behandlungen erfassen";
+            this.btnLogTreatments.UseVisualStyleBackColor = true;
+            this.btnLogTreatments.Visible = false;
+            this.btnLogTreatments.Click += new System.EventHandler(this.btnLogTreatments_Click);
+            // 
+            // treatmentsCtrl1
+            // 
+            this.treatmentsCtrl1.Location = new System.Drawing.Point(220, 0);
+            this.treatmentsCtrl1.Name = "treatmentsCtrl1";
+            this.treatmentsCtrl1.Size = new System.Drawing.Size(771, 513);
+            this.treatmentsCtrl1.TabIndex = 7;
+            this.treatmentsCtrl1.Visible = false;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1003, 513);
+            this.Controls.Add(this.treatmentsCtrl1);
+            this.Controls.Add(this.btnLogTreatments);
             this.Controls.Add(this.healthInsuranceCtrl1);
             this.Controls.Add(this.btnchangeHealthInsurance);
             this.Controls.Add(this.createPatientCtrl1);
@@ -117,5 +160,7 @@
         private CreatePatientCtrl createPatientCtrl1;
         private HealthInsuranceCtrl healthInsuranceCtrl1;
         private System.Windows.Forms.Button btnchangeHealthInsurance;
+        private System.Windows.Forms.Button btnLogTreatments;
+        private TreatmentsCtrl treatmentsCtrl1;
     }
 }

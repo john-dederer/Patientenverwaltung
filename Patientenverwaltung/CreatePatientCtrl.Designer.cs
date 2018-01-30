@@ -52,6 +52,7 @@
             this.lblSpecialTraits = new System.Windows.Forms.Label();
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.txtBoxSpecialTraits = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtBoxFirstName
@@ -223,9 +224,9 @@
             // lstBoxSpecialTraits
             // 
             this.lstBoxSpecialTraits.FormattingEnabled = true;
-            this.lstBoxSpecialTraits.Location = new System.Drawing.Point(37, 321);
+            this.lstBoxSpecialTraits.Location = new System.Drawing.Point(37, 373);
             this.lstBoxSpecialTraits.Name = "lstBoxSpecialTraits";
-            this.lstBoxSpecialTraits.Size = new System.Drawing.Size(705, 134);
+            this.lstBoxSpecialTraits.Size = new System.Drawing.Size(705, 82);
             this.lstBoxSpecialTraits.TabIndex = 21;
             // 
             // lblSpecialTraits
@@ -257,10 +258,19 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // txtBoxSpecialTraits
+            // 
+            this.txtBoxSpecialTraits.Location = new System.Drawing.Point(37, 328);
+            this.txtBoxSpecialTraits.Name = "txtBoxSpecialTraits";
+            this.txtBoxSpecialTraits.Size = new System.Drawing.Size(705, 20);
+            this.txtBoxSpecialTraits.TabIndex = 25;
+            this.txtBoxSpecialTraits.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBoxSpecialTraits_KeyPress);
+            // 
             // CreatePatientCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.txtBoxSpecialTraits);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.lblSpecialTraits);
@@ -318,5 +328,6 @@
         private System.Windows.Forms.Label lblSpecialTraits;
         private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.TextBox txtBoxSpecialTraits;
     }
 }

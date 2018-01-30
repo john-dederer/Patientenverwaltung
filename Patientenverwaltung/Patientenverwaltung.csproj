@@ -131,6 +131,12 @@
     </Compile>
     <Compile Include="Test.cs" />
     <Compile Include="Treatment.cs" />
+    <Compile Include="TreatmentsCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TreatmentsCtrl.Designer.cs">
+      <DependentUpon>TreatmentsCtrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="User.cs" />
     <EmbeddedResource Include="CreatePatientCtrl.resx">
       <DependentUpon>CreatePatientCtrl.cs</DependentUpon>
@@ -172,6 +178,9 @@
     <EmbeddedResource Include="Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TreatmentsCtrl.resx">
+      <DependentUpon>TreatmentsCtrl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
