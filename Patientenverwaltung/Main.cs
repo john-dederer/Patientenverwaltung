@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using Patientenverwaltung.Dialog;
 
 namespace Patientenverwaltung
 {
@@ -29,15 +30,17 @@ namespace Patientenverwaltung
         {
             InitializeComponent();
 
-            createPatientCtrl1  .SetParent(this);
-            healthInsuranceCtrl1.SetParent(this);
+            //createPatientCtrl1  .SetParent(this);
+            //healthInsuranceCtrl1.SetParent(this);
             //logTreatmentsCtrl1.SetParent(this);
 
             Patient = new Patient();
             HealthInsurance = new HealthInsurance();
 
             // Look for JSON Path
-            InitializeJson();            
+            InitializeJson();
+
+            pnlDialog.Controls.Add(new PatientListCtrl());         
         }
 
         public Main(Doctor doctor) : this()
@@ -73,30 +76,9 @@ namespace Patientenverwaltung
             }
         }
 
-        private void txtBoxSearchPatient_TextChanged(object sender, EventArgs e)
-        {
-            // Search for patient
-            if (txtBoxSearchPatient.Text == null) return;
-
-            using (var db = new DatabaseContext())
-            {
-                var query = from x in db.Patients
-                            where x.FirstName.Contains(txtBoxSearchPatient.Text)
-                            orderby x.SecondName
-                            select x;
-
-                foreach (var patient in query)
-                {
-                    Button xButton = new Button();
-                    
-                }
-            }
-
-        }
-
         private void btnCreatePatient_Click(object sender, EventArgs e)
         {            
-            createPatientCtrl1.Visible = !createPatientCtrl1.Visible;
+            //createPatientCtrl1.Visible = !createPatientCtrl1.Visible;
 
             btnchangeHealthInsurance.Visible = !btnchangeHealthInsurance.Visible;
             btnLogTreatments.Visible = !btnLogTreatments.Visible;
@@ -106,28 +88,28 @@ namespace Patientenverwaltung
 
         private void btnchangeHealthInsurance_Click(object sender, EventArgs e)
         {            
-            createPatientCtrl1.Visible = !createPatientCtrl1.Visible;
+            //createPatientCtrl1.Visible = !createPatientCtrl1.Visible;
 
-            healthInsuranceCtrl1.Init();
+           // healthInsuranceCtrl1.Init();
 
-            if (createPatientCtrl1.GetHealthInsurance() != null) healthInsuranceCtrl1.SetSelectedItem(createPatientCtrl1.GetHealthInsurance());
-            healthInsuranceCtrl1.Visible = !healthInsuranceCtrl1.Visible;
+            //if (createPatientCtrl1.GetHealthInsurance() != null) healthInsuranceCtrl1.SetSelectedItem(createPatientCtrl1.GetHealthInsurance());
+            //healthInsuranceCtrl1.Visible = !healthInsuranceCtrl1.Visible;
         }
 
         public void MakeHealthInsuranceVisible(bool visible)
         {
-            createPatientCtrl1.Visible = !createPatientCtrl1.Visible;
-            healthInsuranceCtrl1.Visible = visible;
+            //createPatientCtrl1.Visible = !createPatientCtrl1.Visible;
+            //healthInsuranceCtrl1.Visible = visible;
         }
 
         public void MakeCreatePatientVisible(bool visible)
         {
-            createPatientCtrl1.Visible = visible;
+            //createPatientCtrl1.Visible = visible;
 
             if (visible) return;
 
             // Main Maske
-            healthInsuranceCtrl1.Visible = false;
+            //healthInsuranceCtrl1.Visible = false;
             btnCreatePatient.Visible = true;
             btnchangeHealthInsurance.Visible = false;
             btnLogTreatments.Visible = false;
@@ -135,14 +117,14 @@ namespace Patientenverwaltung
 
         public void SetHealthInsurance(HealthInsurance healthInsurance)
         {
-            createPatientCtrl1.SetHealthInsurance(healthInsurance);
+            //createPatientCtrl1.SetHealthInsurance(healthInsurance);
         }
 
         private void btnLogTreatments_Click(object sender, EventArgs e)
         {
-            createPatientCtrl1.Visible = !createPatientCtrl1.Visible;
-
-            treatmentsCtrl1.Visible = !treatmentsCtrl1.Visible;
+            //createPatientCtrl1.Visible = !createPatientCtrl1.Visible;
+            //
+            //treatmentsCtrl1.Visible = !treatmentsCtrl1.Visible;
             //logTreatmentsCtrl1.Init();
 
             //logTreatmentsCtrl1.Visible = !logTreatmentsCtrl1.Visible;
@@ -151,6 +133,11 @@ namespace Patientenverwaltung
         public void MakeLogTreatmentsVisible(bool b)
         {
             
+        }
+
+        private void btnSearchMask_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

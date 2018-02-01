@@ -49,6 +49,8 @@ namespace Patientenverwaltung
 
             var settings = JsonConvert.DeserializeObject<Settings>(file);
 
+            if (settings == null) return;
+
             SaveType = settings.SaveType;
             comboBox1.SelectedItem = settings.SaveType;
             comboBox1.SelectedIndex = comboBox1.Items.IndexOf(settings.SaveType);

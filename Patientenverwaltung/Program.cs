@@ -26,7 +26,7 @@ namespace Patientenverwaltung
 
             if (OpenMainFormOnClose)
             {
-               Application.Run(new Main(Doctor)); 
+               Application.Run(new Main(Connector.Doctor)); 
             }
         }
     }

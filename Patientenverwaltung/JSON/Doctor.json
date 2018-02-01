@@ -20,14 +20,15 @@
           "StreetNumber": 0,
           "Postalcode": 0,
           "City": null,
-          "State": 0
+          "State": 0,
+          "Base": null
         },
-        "BitBirthday": "0001-01-01T00:00:00",
         "Birthday": "2018-01-29T00:00:00",
         "Phonenumber": 121,
         "SpecialTraits": [],
         "Treatments": null,
-        "Key": "--01.01.0001 00:00:00"
+        "Key": "--01.01.0001 00:00:00",
+        "Base": null
       },
       {
         "FirstName": "John",
@@ -44,15 +45,115 @@
           "StreetNumber": 0,
           "Postalcode": 0,
           "City": null,
-          "State": 0
+          "State": 0,
+          "Base": null
         },
-        "BitBirthday": "0001-01-01T00:00:00",
         "Birthday": "2018-01-30T00:00:00",
         "Phonenumber": 123,
         "SpecialTraits": [],
         "Treatments": null,
-        "Key": "test-John-2018-01-30"
+        "Key": "test-John-2018-01-30",
+        "Base": null
+      },
+      {
+        "FirstName": "Test",
+        "SecondName": "123",
+        "Street": "ASdasd",
+        "StreetNumber": 123,
+        "Postalcode": 123,
+        "City": "123",
+        "InsuranceID": 0,
+        "HealthInsurance": {
+          "Name": null,
+          "InsuranceID": 0,
+          "Street": null,
+          "StreetNumber": 0,
+          "Postalcode": 0,
+          "City": null,
+          "State": 0,
+          "Base": null
+        },
+        "Birthday": "2018-02-01T00:00:00",
+        "Phonenumber": 123,
+        "SpecialTraits": [
+          "as"
+        ],
+        "Treatments": null,
+        "Key": "123-Test-2018-02-01",
+        "Base": null
+      },
+      {
+        "FirstName": "123",
+        "SecondName": "123",
+        "Street": "123",
+        "StreetNumber": 123,
+        "Postalcode": 123,
+        "City": "213",
+        "InsuranceID": 0,
+        "HealthInsurance": {
+          "Name": "AOK",
+          "InsuranceID": 0,
+          "Street": "asda",
+          "StreetNumber": 12,
+          "Postalcode": 12,
+          "City": "asd",
+          "State": 0,
+          "Base": null
+        },
+        "Birthday": "2018-02-01T00:00:00",
+        "Phonenumber": 123,
+        "SpecialTraits": [
+          "123"
+        ],
+        "Treatments": null,
+        "Key": "123-123-2018-02-01",
+        "Base": null
       }
-    ]
+    ],
+    "Base": null
+  },
+  {
+    "Name": null,
+    "Id": null,
+    "Username": "John",
+    "Hash": "sha1:64000:18:gsKsf0H+AA896jaZoiBtUTzmpaMtZxh/:OArHbadyq+XHIs8V0g1C3Z9j",
+    "Patients": [],
+    "Base": null
+  },
+  {
+    "Name": null,
+    "Id": null,
+    "Username": "John123",
+    "Hash": "sha1:64000:18:J6Vs9mox2AH2D07xykoQbaLF06wRP0RS:8nV9/WUVNYn2zp/5aYbSESRw",
+    "Patients": [
+      {
+        "FirstName": "John",
+        "SecondName": "Dederer",
+        "Street": "Test",
+        "StreetNumber": 123,
+        "Postalcode": 74080,
+        "City": "Heilbronn",
+        "InsuranceID": 0,
+        "HealthInsurance": {
+          "Name": "AOK",
+          "InsuranceID": 0,
+          "Street": "asda",
+          "StreetNumber": 12,
+          "Postalcode": 12,
+          "City": "asd",
+          "State": 0,
+          "Base": null
+        },
+        "Birthday": "2018-02-01T00:00:00",
+        "Phonenumber": 1805,
+        "SpecialTraits": [
+          "Kein"
+        ],
+        "Treatments": null,
+        "Key": "Dederer-John-2018-02-01",
+        "Base": null
+      }
+    ],
+    "Base": null
   }
 ]

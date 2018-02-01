@@ -8,9 +8,10 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Patientenverwaltung</RootNamespace>
     <AssemblyName>Patientenverwaltung</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -71,19 +72,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connector.cs" />
-    <Compile Include="CreatePatientCtrl.cs">
+    <Compile Include="Dialog\CreatePatientCtrl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CreatePatientCtrl.Designer.cs">
+    <Compile Include="Dialog\CreatePatientCtrl.Designer.cs">
       <DependentUpon>CreatePatientCtrl.cs</DependentUpon>
     </Compile>
     <Compile Include="DatabaseContext.cs" />
-    <Compile Include="Doctor.cs" />
-    <Compile Include="HealthInsurance.cs" />
-    <Compile Include="HealthInsuranceCtrl.cs">
+    <Compile Include="Dialog\PatientListCtrl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="HealthInsuranceCtrl.Designer.cs">
+    <Compile Include="Dialog\PatientListCtrl.Designer.cs">
+      <DependentUpon>PatientListCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\SearchMaskCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dialog\SearchMaskCtrl.Designer.cs">
+      <DependentUpon>SearchMaskCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Doctor.cs" />
+    <Compile Include="HealthInsurance.cs" />
+    <Compile Include="Dialog\HealthInsuranceCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dialog\HealthInsuranceCtrl.Designer.cs">
       <DependentUpon>HealthInsuranceCtrl.cs</DependentUpon>
     </Compile>
     <Compile Include="Login.cs">
@@ -113,10 +126,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="SettingsCtrl.cs">
+    <Compile Include="Dialog\SettingsCtrl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SettingsCtrl.Designer.cs">
+    <Compile Include="Dialog\SettingsCtrl.Designer.cs">
       <DependentUpon>SettingsCtrl.cs</DependentUpon>
     </Compile>
     <Compile Include="Strings.de.Designer.cs">
@@ -131,18 +144,24 @@
     </Compile>
     <Compile Include="Test.cs" />
     <Compile Include="Treatment.cs" />
-    <Compile Include="TreatmentsCtrl.cs">
+    <Compile Include="Dialog\TreatmentsCtrl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TreatmentsCtrl.Designer.cs">
+    <Compile Include="Dialog\TreatmentsCtrl.Designer.cs">
       <DependentUpon>TreatmentsCtrl.cs</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
-    <EmbeddedResource Include="CreatePatientCtrl.resx">
+    <EmbeddedResource Include="Dialog\CreatePatientCtrl.resx">
       <DependentUpon>CreatePatientCtrl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HealthInsuranceCtrl.resx">
+    <EmbeddedResource Include="Dialog\HealthInsuranceCtrl.resx">
       <DependentUpon>HealthInsuranceCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\PatientListCtrl.resx">
+      <DependentUpon>PatientListCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\SearchMaskCtrl.resx">
+      <DependentUpon>SearchMaskCtrl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.de-DE.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -167,8 +186,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SettingsCtrl.resx">
+    <EmbeddedResource Include="Dialog\SettingsCtrl.resx">
       <DependentUpon>SettingsCtrl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Strings.de.resx">
@@ -179,7 +199,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="TreatmentsCtrl.resx">
+    <EmbeddedResource Include="Dialog\TreatmentsCtrl.resx">
       <DependentUpon>TreatmentsCtrl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

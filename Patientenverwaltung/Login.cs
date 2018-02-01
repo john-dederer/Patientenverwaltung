@@ -78,6 +78,7 @@ namespace Patientenverwaltung
                 {
                     Program.OpenMainFormOnClose = true;
                     Program.Doctor = doctor;
+                    Connector.Doctor = doctor;
                     Close();
                 }
                 else
